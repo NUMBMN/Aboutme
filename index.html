@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>صفحه پروفایل حرفه‌ای</title>
+<style>
+  @font-face {
+    font-family: 'MyCustomFont';
+    src: url('FL/mob.ttf') format('truetype');
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'MyCustomFont', Tahoma, sans-serif;
+    
+    /* ⬇️⬇️⬇️ این قسمت را ویرایش کنید ⬇️⬇️⬇️ */
+    /* آدرس تصویر پس‌زمینه خود را اینجا قرار دهید */
+    background: url('https://s6.uupload.ir/files/img_20250627_153652_629_lzw6.jpg') no-repeat center center fixed;
+    /* ⬆️⬆️⬆️ این قسمت را ویرایش کنید ⬆️⬆️⬆️ */
+
+    background-size: cover;
+    direction: rtl;
+    color: white;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* صفحه ورود */
+  #enterScreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 2.5rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    z-index: 2000;
+    transition: opacity 0.6s ease;
+  }
+  #enterScreen.fadeOut {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* محتوای اصلی */
+  #mainContent {
+    display: none;
+    width: 350px;
+    max-width: 90vw;
+    height: 320px;
+    background: rgba(255, 0, 0, 0.35);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255,0,0,0.7);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    position: relative;
+  }
+  #mainContent.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* شمارش بازدید */
+  .view-section {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 1.1rem;
+    user-select: none;
+  }
+  .view-section i {
+    font-size: 1.3rem;
+    color: white;
+  }
+
+  /* عکس پروفایل گرد */
+  .profile-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    flex-shrink: 0;
+  }
+
+  /* توضیحات */
+  .description {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* بج‌ها */
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  .badges img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    padding: 4px 6px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px rgba(255,0,0,0.5);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .badges img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(255,0,0,0.8);
+  }
+
+  /* آیکون شبکه‌ها */
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: auto;
+  }
+  .social-icons a {
+    color: white;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+  }
+  .social-icons a:hover {
+    color: #ff4c4c;
+  }
+
+  /* دکمه قطع/وصل صدا */
+  #soundToggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 1.8rem;
+    color: white;
+    cursor: pointer;
+    z-index: 3000;
+    user-select: none;
+    background: rgba(255, 0, 0, 0.35);
+    border-radius: 20px;
+    padding: 6px 12px;
+    box-shadow: 0 0 12px rgba(255,0,0,0.7);
+    transition: background-color 0.3s ease;
+  }
+  #soundToggle:hover {
+    background-color: rgba(255, 0, 0, 0.7);
+  }
+
+  /* برف متحرک */
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    user-select: none;
+    pointer-events: none;
+    z-index: 2500;
+    font-size: 1.3rem;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes fall {
+    0% {
+      transform: translateY(0) translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) translateX(20px);
+      opacity: 0;
+    }
+  }
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<div id="enterScreen" aria-label="صفحه ورود">برای ورود کلیک کنید</div>
+
+<div id="mainContent" role="main" aria-label="محتوای پروفایل">
+  <div class="view-section" aria-label="تعداد بازدید">
+    <i class="fas fa-eye" aria-hidden="true"></i>
+    <span>0</span>
+  </div>
+
+  <img src="FL/prof.png" alt="تصویر پروفایل" class="profile-img" />
+
+  <div class="description" tabindex="0">
+    سلام! من [نام شما] هستم. اینجا توضیحاتی درباره من می‌نویسم که کاربران ببینند.
+  </div>
+
+  <div class="badges" aria-label="بج‌های پروفایل">
+    <img src="FL/hype.png" alt="HypeSquad" title="HypeSquad" />
+    <img src="FL/Orbs_Discord.png" alt="Orb" title="Orb" />
+    <img src="FL/boost.png" alt="Boost" title="Boost" />
+    <img src="FL/Developer.png" alt="Developer" title="Developer" />
+    <img src="FL/Quest.png" alt="Quest" title="Quest" />
+    <img src="FL/Originally.png" alt="Bug Hunter" title="Bug Hunter" />
+  </div>
+
+  <div class="social-icons" aria-label="شبکه‌های اجتماعی">
+    <a href="https://instagram.com" target="_blank" rel="noopener" title="اینستاگرام">
+      <i class="fab fa-instagram" aria-hidden="true"></i>
+    </a>
+    <a href="https://telegram.org" target="_blank" rel="noopener" title="تلگرام">
+      <i class="fab fa-telegram" aria-hidden="true"></i>
+    </a>
+    <a href="https://discord.com" target="_blank" rel="noopener" title="دیسکورد">
+      <i class="fab fa-discord" aria-hidden="true"></i>
+    </a>
+  </div>
+</div>
+
+<div id="soundToggle" role="button" aria-label="قطع و وصل صدا" tabindex="0">
+  <i class="fas fa-volume-up" aria-hidden="true"></i>
+</div>
+
+<audio id="backgroundMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+  const enterScreen = document.getElementById('enterScreen');
+  const mainContent = document.getElementById('mainContent');
+  const audio = document.getElementById('backgroundMusic');
+  const soundToggle = document.getElementById('soundToggle');
+  const soundIcon = soundToggle.querySelector('i');
+  const viewCountSpan = document.querySelector('.view-section span');
+
+  // ورود با کلیک
+  enterScreen.addEventListener('click', () => {
+    enterScreen.classList.add('fadeOut');
+    setTimeout(() => {
+      enterScreen.style.display = 'none';
+      mainContent.classList.add('show');
+      audio.play().catch(() => {
+        // بعضی مرورگرها ممکن جلوی پخش خودکار بگیرن
+        console.log('پخش خودکار فعال نیست');
+      });
+    }, 600);
+  });
+
+  // کنترل صدا
+  soundToggle.addEventListener('click', () => {
+    if(audio.paused) {
+      audio.play();
+      soundIcon.classList.remove('fa-volume-mute');
+      soundIcon.classList.add('fa-volume-up');
+    } else {
+      audio.pause();
+      soundIcon.classList.remove('fa-volume-up');
+      soundIcon.classList.add('fa-volume-mute');
+    }
+  });
+
+  // دسترسی کیبورد برای دکمه صدا
+  soundToggle.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      soundToggle.click();
+    }
+  });
+
+  // شمارش بازدید با CountAPI
+  fetch('https://api.countapi.xyz/hit/myprofilepage/visits')
+    .then(res => res.json())
+    .then(data => {
+      viewCountSpan.textContent = data.value;
+    })
+    .catch(() => {
+      viewCountSpan.textContent = '0';
+    });
+
+  // ایجاد برف متحرک
+  function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+    snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    snowflake.style.opacity = Math.random();
+    snowflake.textContent = '❄';
+
+    document.body.appendChild(snowflake);
+
+    setTimeout(() => {
+      snowflake.remove();
+    }, 10000);
+  }
+  setInterval(createSnowflake, 300);
+</script>
+
+</body>
+</html>

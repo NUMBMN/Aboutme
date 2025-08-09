@@ -12,24 +12,16 @@
   body, html {
     margin: 0; padding: 0; height: 100%;
     font-family: 'MyCustomFont', Tahoma, sans-serif;
-    
-    /* ⬇️⬇️⬇️ این قسمت را ویرایش کنید ⬇️⬇️⬇️ */
-    /* آدرس تصویر پس‌زمینه خود را اینجا قرار دهید */
     background: url('https://s6.uupload.ir/files/img_20250627_153652_629_lzw6.jpg') no-repeat center center fixed;
-    /* ⬆️⬆️⬆️ این قسمت را ویرایش کنید ⬆️⬆️⬆️ */
-
     background-size: cover;
     direction: rtl;
     color: white;
     overflow-x: hidden;
     scroll-behavior: smooth;
-
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
-  /* صفحه ورود */
   #enterScreen {
     position: fixed;
     inset: 0;
@@ -50,8 +42,6 @@
     opacity: 0;
     pointer-events: none;
   }
-
-  /* محتوای اصلی */
   #mainContent {
     display: none;
     width: 350px;
@@ -62,12 +52,10 @@
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(255,0,0,0.7);
     color: white;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease, transform 0.8s ease;
@@ -78,8 +66,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* شمارش بازدید */
   .view-section {
     position: absolute;
     top: 30px;
@@ -97,8 +83,6 @@
     font-size: 1.3rem;
     color: white;
   }
-
-  /* عکس پروفایل گرد */
   .profile-img {
     width: 140px;
     height: 140px;
@@ -107,15 +91,11 @@
     border: 3px solid white;
     flex-shrink: 0;
   }
-
-  /* توضیحات */
   .description {
     font-size: 1.1rem;
     line-height: 1.4;
     text-align: center;
   }
-
-  /* بج‌ها */
   .badges {
     display: flex;
     justify-content: center;
@@ -138,8 +118,6 @@
     transform: scale(1.15);
     box-shadow: 0 0 15px rgba(255,0,0,0.8);
   }
-
-  /* آیکون شبکه‌ها */
   .social-icons {
     display: flex;
     justify-content: center;
@@ -155,8 +133,6 @@
   .social-icons a:hover {
     color: #ff4c4c;
   }
-
-  /* دکمه قطع/وصل صدا */
   #soundToggle {
     position: fixed;
     top: 15px;
@@ -175,8 +151,6 @@
   #soundToggle:hover {
     background-color: rgba(255, 0, 0, 0.7);
   }
-
-  /* برف متحرک */
   .snowflake {
     position: fixed;
     top: -10px;
@@ -199,7 +173,6 @@
       opacity: 0;
     }
   }
-
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -216,11 +189,9 @@
   <img src="prof.png" alt="تصویر پروفایل" class="profile-img" />
 
   <div class="description" tabindex="0">
-    
 Hello, I’m Numb (also known as Mobin).
 You can find my contact information below on Discord, Instagram, and Telegram.
 Also, I’d appreciate it if you could visit the main site of NamiNet.
-
   </div>
 
   <div class="badges" aria-label="بج‌های پروفایل">
@@ -242,6 +213,9 @@ Also, I’d appreciate it if you could visit the main site of NamiNet.
     <a href="https://discord.com" target="_blank" rel="noopener" title="دیسکورد">
       <i class="fab fa-discord" aria-hidden="true"></i>
     </a>
+    <a href="https://namai-net.ir" target="_blank" rel="noopener" title="وبسایت اصلی">
+      <i class="fas fa-globe" aria-hidden="true"></i>
+    </a>
   </div>
 </div>
 
@@ -261,20 +235,17 @@ Also, I’d appreciate it if you could visit the main site of NamiNet.
   const soundIcon = soundToggle.querySelector('i');
   const viewCountSpan = document.querySelector('.view-section span');
 
-  // ورود با کلیک
   enterScreen.addEventListener('click', () => {
     enterScreen.classList.add('fadeOut');
     setTimeout(() => {
       enterScreen.style.display = 'none';
       mainContent.classList.add('show');
       audio.play().catch(() => {
-        // بعضی مرورگرها ممکن جلوی پخش خودکار بگیرن
         console.log('پخش خودکار فعال نیست');
       });
     }, 600);
   });
 
-  // کنترل صدا
   soundToggle.addEventListener('click', () => {
     if(audio.paused) {
       audio.play();
@@ -287,7 +258,6 @@ Also, I’d appreciate it if you could visit the main site of NamiNet.
     }
   });
 
-  // دسترسی کیبورد برای دکمه صدا
   soundToggle.addEventListener('keydown', (e) => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -295,7 +265,6 @@ Also, I’d appreciate it if you could visit the main site of NamiNet.
     }
   });
 
-  // شمارش بازدید با CountAPI
   fetch('https://api.countapi.xyz/hit/myprofilepage/visits')
     .then(res => res.json())
     .then(data => {
@@ -305,7 +274,6 @@ Also, I’d appreciate it if you could visit the main site of NamiNet.
       viewCountSpan.textContent = '0';
     });
 
-  // ایجاد برف متحرک
   function createSnowflake() {
     const snowflake = document.createElement('div');
     snowflake.classList.add('snowflake');
@@ -314,9 +282,7 @@ Also, I’d appreciate it if you could visit the main site of NamiNet.
     snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
     snowflake.style.opacity = Math.random();
     snowflake.textContent = '❄';
-
     document.body.appendChild(snowflake);
-
     setTimeout(() => {
       snowflake.remove();
     }, 10000);

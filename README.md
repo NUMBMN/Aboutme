@@ -2,4 +2,4 @@
 
 ![IM MOBIN NUMN](https://img.shields.io/badge/IM%20MOBIN%20NUMN-blueviolet?style=for-the-badge&logo=github)
 
-![IM MOBIN NUMN](https://textanim.com/text-anim-02/2024-IM-MOBIN-NUMN.gif)
+## این یک نمونه سایت بسیار پایه است و سایر نسخه ها پابلیک نیست تنها دلیل پابلیک بودن این نمونه ایده گرفتنه 🤌
